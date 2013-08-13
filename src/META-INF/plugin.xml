@@ -167,6 +167,7 @@
   <vendor>JetBrains</vendor>
   <idea-version since-build="130.1485" until-build="131.1"/>
   <depends>com.intellij.modules.ultimate</depends>
+  <depends optional="true" config-file="haxe-maven-integration.xml">org.jetbrains.idea.maven</depends>
   <depends optional="true" config-file="flex-debugger-support.xml">com.intellij.flex</depends>
   <depends optional="true" config-file="debugger-support.xml">com.intellij.modules.ultimate</depends>
 
@@ -176,6 +177,9 @@
   <extensionPoints>
     <extensionPoint name="module.config" interface="com.intellij.plugins.haxe.ide.projectStructure.HaxeModuleConfigurationExtensionPoint"/>
   </extensionPoints>
+  <extensions xmlns="org.jetbrains.idea.maven">
+    <importer implementation="org.jetbrains.plugins.haxe.config.HaxeMavenImporter"/>
+  </extensions>
   <extensions defaultExtensionNs="com.intellij">
     <compileServer.plugin classpath="haxe-jps-plugin.jar;haxe-common.jar"/>
     <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
