@@ -28,14 +28,14 @@ import java.awt.event.ActionListener;
 /**
  * @author: Fedor.Korotkov
  */
-public class HaxeAdditionalConfigurablePanel {
+public class HaxeSdkAdditionalConfigurablePanel {
   private TextFieldWithBrowseButton myNekoTextField;
   private JPanel myPanel;
   private JLabel myNekoLabel;
   private TextFieldWithBrowseButton myHaxelibTextField;
   private JLabel myHaxelibLabel;
 
-  public HaxeAdditionalConfigurablePanel() {
+  public HaxeSdkAdditionalConfigurablePanel() {
     myNekoTextField.getButton().addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {

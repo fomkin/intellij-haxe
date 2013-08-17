@@ -171,8 +171,12 @@ public class HaxeCommonCompilerUtil {
       if (!workingDirectory.exists()) {
         workingDirectory.mkdir();
       }
+
+      ProcessBuilder processBuilder = new ProcessBuilder(commandLine);
+      processBuilder.directory(workingDirectory);
+
       BaseOSProcessHandler handler = new BaseOSProcessHandler(
-        new ProcessBuilder(commandLine).directory(workingDirectory).start(),
+        processBuilder.start(),
         null,
         Charset.defaultCharset()
       );

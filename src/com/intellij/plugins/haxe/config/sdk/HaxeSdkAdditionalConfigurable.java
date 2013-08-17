@@ -21,7 +21,7 @@ import com.intellij.openapi.projectRoots.AdditionalDataConfigurable;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkModificator;
 import com.intellij.openapi.util.io.FileUtil;
-import com.intellij.plugins.haxe.config.sdk.ui.HaxeAdditionalConfigurablePanel;
+import com.intellij.plugins.haxe.config.sdk.ui.HaxeSdkAdditionalConfigurablePanel;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -29,12 +29,12 @@ import javax.swing.*;
 /**
  * @author: Fedor.Korotkov
  */
-public class HaxeAdditionalConfigurable implements AdditionalDataConfigurable {
-  private final HaxeAdditionalConfigurablePanel myHaxeAdditionalConfigurablePanel;
+public class HaxeSdkAdditionalConfigurable implements AdditionalDataConfigurable {
+  private final HaxeSdkAdditionalConfigurablePanel myHaxeAdditionalConfigurablePanel;
   private Sdk mySdk;
 
-  public HaxeAdditionalConfigurable() {
-    myHaxeAdditionalConfigurablePanel = new HaxeAdditionalConfigurablePanel();
+  public HaxeSdkAdditionalConfigurable() {
+    myHaxeAdditionalConfigurablePanel = new HaxeSdkAdditionalConfigurablePanel();
   }
 
   @Override

@@ -24,58 +24,67 @@ import com.intellij.openapi.util.SystemInfo;
 import com.intellij.plugins.haxe.HaxeBundle;
 import com.intellij.plugins.haxe.HaxeCommonBundle;
 import com.intellij.util.xmlb.XmlSerializer;
+import icons.HaxeIcons;
 import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class HaxeSdkType extends SdkType {
-  public HaxeSdkType() {
-    super(HaxeCommonBundle.message("haxe.sdk.name"));
+public class HaxemojosSdkType extends SdkType {
+
+  public HaxemojosSdkType() {
+    super(HaxeCommonBundle.message("haxemojos.sdk.name"));
   }
 
   @Override
   public Icon getIcon() {
-    return icons.HaxeIcons.HaXe_16;
+    return HaxeIcons.Haxemojos_16;
   }
 
   @Override
   public Icon getIconForAddAction() {
-    return icons.HaxeIcons.HaXe_16;
+    return HaxeIcons.Haxemojos_16;
   }
 
-  public static HaxeSdkType getInstance() {
-    return SdkType.findInstance(HaxeSdkType.class);
+  public static HaxemojosSdkType getInstance() {
+    return SdkType.findInstance(HaxemojosSdkType.class);
   }
 
   @Override
   public String getPresentableName() {
-    return HaxeBundle.message("haxe.sdk.name.presentable");
+    return HaxeBundle.message("haxemojos.sdk.name.presentable");
   }
 
   @Override
   public String suggestSdkName(String currentSdkName, String sdkHome) {
-    return HaxeBundle.message("haxe.sdk.name.suggest", getVersionString(sdkHome));
+    return HaxeBundle.message("haxemojos.sdk.name.suggest", getVersionString(sdkHome));
   }
 
   @Override
   public String getVersionString(String sdkHome) {
-    final HaxeSdkData haxeSdkData = HaxeSdkUtil.testHaxeSdk(sdkHome);
-    return haxeSdkData != null ? haxeSdkData.getVersion() : super.getVersionString(sdkHome);
+    Pattern pattern = Pattern.compile("haxemojos-maven-plugin-(.*)");
+    Matcher matcher = pattern.matcher(sdkHome);
+    if (matcher.find()) {
+      return matcher.group(1);
+    }
+    else return "NA";
   }
 
   @Override
   public String suggestHomePath() {
-    return HaxeSdkUtil.suggestHomePath();
+    return "";
   }
 
   @Override
   public boolean isValidSdkHome(String path) {
-    return HaxeSdkUtil.testHaxeSdk(path) != null;
+    return true;
   }
 
   @Override
   public AdditionalDataConfigurable createAdditionalDataConfigurable(SdkModel sdkModel, SdkModificator sdkModificator) {
-    return new HaxeSdkAdditionalConfigurable();
+    return new HaxemojosSdkAdditionalDataConfigurable();
   }
 
   @Override
@@ -84,29 +93,24 @@ public class HaxeSdkType extends SdkType {
   }
 
   @Override
-  public void setupSdkPaths(Sdk sdk) {
+  public void setupSdkPaths(@NotNull Sdk sdk) {
     final SdkModificator modificator = sdk.getSdkModificator();
-
-    SdkAdditionalData data = sdk.getSdkAdditionalData();
-    if (data == null) {
-      data = HaxeSdkUtil.testHaxeSdk(sdk.getHomePath());
-      modificator.setSdkAdditionalData(data);
+    if (sdk.getSdkAdditionalData() == null) {
+      HaxemojosSdkData haxemojosData = new HaxemojosSdkData("", "");
+      modificator.setSdkAdditionalData(haxemojosData);
     }
-
-    HaxeSdkUtil.setupSdkPaths(sdk.getHomeDirectory(), modificator);
-
     modificator.commitChanges();
     super.setupSdkPaths(sdk);
   }
 
   @Override
   public SdkAdditionalData loadAdditionalData(Element additional) {
-    return XmlSerializer.deserialize(additional, HaxeSdkData.class);
+    return XmlSerializer.deserialize(additional, HaxemojosSdkData.class);
   }
 
   @Override
   public void saveAdditionalData(SdkAdditionalData additionalData, Element additional) {
-    if (additionalData instanceof HaxeSdkData) {
+    if (additionalData instanceof HaxemojosSdkData) {
       XmlSerializer.serializeInto(additionalData, additional);
     }
   }

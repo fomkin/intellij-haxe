@@ -25,6 +25,7 @@ import com.intellij.openapi.projectRoots.SdkTypeId;
 import com.intellij.openapi.roots.CompilerModuleExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.plugins.haxe.config.sdk.HaxeSdkType;
+import com.intellij.plugins.haxe.config.sdk.HaxemojosSdkType;
 import org.jetbrains.annotations.NotNull;
 
 public class HaxeModuleBuilder extends JavaModuleBuilder implements SourcePathsBuilder, ModuleBuilderListener {
@@ -41,7 +42,7 @@ public class HaxeModuleBuilder extends JavaModuleBuilder implements SourcePathsB
 
   @Override
   public boolean isSuitableSdkType(SdkTypeId sdk) {
-    return sdk == HaxeSdkType.getInstance();
+    return sdk == HaxeSdkType.getInstance() || sdk == HaxemojosSdkType.getInstance();
   }
 
   @Override
